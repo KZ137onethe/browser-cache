@@ -37,6 +37,7 @@ const app = http.createServer(function (req, res) {
         },
       });
       break;
+    // 获取一句话，使用的是强制缓存和协商缓存的结合
     case "/sentence":
       fullPath = path.join(__dirname, "../static/assets/txt/sentence.txt");
       responseForReadFile(fullPath, {
@@ -69,6 +70,8 @@ const app = http.createServer(function (req, res) {
       const suffix = path.extname(fullPath);
       if (suffix === ".js") {
         res.setHeader("Content-Type", "application/javascript");
+      } else if (suffix === ".svg") {
+        res.setHeader("Content-Type", "image/svg+xml");
       }
       responseForReadFile(fullPath, {
         req,
@@ -77,8 +80,7 @@ const app = http.createServer(function (req, res) {
           log.debug(`静态资源请求路径 => ${url}`);
           const etag = generateFileHash(data, "content");
           const ifNoneMatch = req.headers["if-none-match"];
-          // console.log("etag =>", etag, "ifNoneMatch => ", ifNoneMatch);
-
+          log.debug("etag =>", etag, "ifNoneMatch => ", ifNoneMatch);
           if (ifNoneMatch && ifNoneMatch === etag) {
             res.writeHead(304, {
               ETag: etag,
