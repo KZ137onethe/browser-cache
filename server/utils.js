@@ -37,13 +37,17 @@ function formatToGMT(dateString) {
   return date.toUTCString();
 }
 
-function responseForReadFile(path, opt = { req, res, callback }) {
-  fs.readFile(path, function (err, data) {
+function responseForReadFile(
+  path,
+  opts = { req, res, format: null, callback }
+) {
+  const { res, format, callback } = opts;
+  fs.readFile(path, format, function (err, data) {
     if (err) {
-      opt.res.statusCode = 500;
-      opt.res.end(err.message);
+      res.statusCode = 500;
+      res.end(err.message);
     } else {
-      opt.callback(data);
+      callback(data);
     }
   });
 }

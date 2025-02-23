@@ -1,11 +1,7 @@
 const http = require("http");
 const path = require("path");
-const fs = require("fs");
-const {
-  generateFileHash,
-  formatToGMT,
-  responseForReadFile,
-} = require("./utils");
+const log = require("./log4js")("default");
+const { generateFileHash, responseForReadFile } = require("./utils");
 
 const app = http.createServer(function (req, res) {
   const url = req.url;
@@ -24,28 +20,61 @@ const app = http.createServer(function (req, res) {
         },
       });
       break;
+    // 获取一句名言，使用的是强制缓存
     case "/dictum":
-      fullPath = path.join(__dirname, "../static/assets/txt/info.txt");
+      fullPath = path.join(__dirname, "../static/assets/txt/dictum.txt");
       responseForReadFile(fullPath, {
         req,
         res,
+        format: "utf-8",
         callback: (data) => {
-          console.log("请求路径为 /dictum");
+          log.debug("请求路径 => '/dictum'");
           res.writeHead(200, {
             "Cache-Control": "max-age=10",
+            "Content-Type": "text/plain",
           });
-          console.log(data);
           res.end(data);
         },
       });
+      break;
+    case "/sentence":
+      fullPath = path.join(__dirname, "../static/assets/txt/sentence.txt");
+      responseForReadFile(fullPath, {
+        req,
+        res,
+        format: "utf-8",
+        callback: (data) => {
+          log.debug("请求路径为 '/sentence'");
+          const etag = generateFileHash(data, "content");
+          const ifNoneMatch = req.headers["if-none-match"];
+          const headers = {
+            "Cache-Control": "max-age=12",
+            ETag: generateFileHash(data, "content"),
+            "Content-Type": "text/plain",
+          };
+          if (ifNoneMatch && ifNoneMatch === etag) {
+            res.writeHead(304, headers);
+            res.end();
+          } else {
+            res.writeHead(200, headers);
+            res.end(data);
+          }
+        },
+      });
+      break;
     // 默认请求静态资源，使用的是协商缓存
     default:
       fullPath = path.join(__dirname, "../static", url);
+      // 获取fullPath的后缀名
+      const suffix = path.extname(fullPath);
+      if (suffix === ".js") {
+        res.setHeader("Content-Type", "application/javascript");
+      }
       responseForReadFile(fullPath, {
         req,
         res,
         callback: (data) => {
-          // console.log(`静态资源请求路径为 ${path.join("static", url)}`);
+          log.debug(`静态资源请求路径 => ${url}`);
           const etag = generateFileHash(data, "content");
           const ifNoneMatch = req.headers["if-none-match"];
           // console.log("etag =>", etag, "ifNoneMatch => ", ifNoneMatch);
@@ -57,7 +86,7 @@ const app = http.createServer(function (req, res) {
             res.end();
           } else {
             res.writeHead(200, {
-              ETag: generateFileHash(data, "content"),
+              ETag: etag,
             });
             res.end(data);
           }
