@@ -1,7 +1,12 @@
 const crypto = require("crypto");
 const fs = require("fs");
 
-// 对文件生成唯一的hash值
+/**
+ * 对文件生成唯一的hash值
+ * @param {string} val - 内容
+ * @param {"file" | "content"} type - 内容的类型，file代表文件，content代表文件解析后的内容
+ * @returns string
+ */
 function generateFileHash(val, type = "file") {
   let data;
   const hash = crypto.createHash("sha1");
@@ -37,23 +42,7 @@ function formatToGMT(dateString) {
   return date.toUTCString();
 }
 
-function responseForReadFile(
-  path,
-  opts = { req, res, format: null, callback }
-) {
-  const { res, format, callback } = opts;
-  fs.readFile(path, format, function (err, data) {
-    if (err) {
-      res.statusCode = 500;
-      res.end(err.message);
-    } else {
-      callback(data);
-    }
-  });
-}
-
 module.exports = {
   generateFileHash,
   formatToGMT,
-  responseForReadFile,
 };
