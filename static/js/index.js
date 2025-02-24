@@ -1,18 +1,22 @@
-import { getCacheControlContent } from "./utils.js";
+import { getCacheControlContent } from "./parse.js";
+import { popupMessageBox, fixFeedBackElementContent } from "./dom.js";
 
 // 强制缓存测试
 (function (doc) {
-  const test1 = doc.querySelector("div.test-1");
-  const sendBtn = test1.querySelector("button#send");
-  const feedBackContent = test1.querySelector("span.feed-back");
+  const test1 = doc.querySelector("#test-1");
+  const reqBtn = test1.querySelector("button#request-dictum");
+  const feedBackEl = test1.querySelector("div.feed-back");
+  let timeSpan = "";
+
+  fixFeedBackElementContent(feedBackEl, { cache: false });
 
   // 强制缓存时间, 是否能对maxAge赋值, 页面记录强制缓存时间的计时器
   let maxAge = undefined,
     flag = false,
     timer = null;
 
-  sendBtn.addEventListener("click", function () {
-    fetch("http://localhost:3000/dictum", {
+  reqBtn.addEventListener("click", function () {
+    fetch("/dictum", {
       method: "GET",
       headers: {
         "Content-Type": "text/plain",
@@ -22,25 +26,28 @@ import { getCacheControlContent } from "./utils.js";
         if (response.ok) {
           if (!flag) {
             maxAge = getCacheControlContent(response.headers)["max-age"];
+            timeSpan = fixFeedBackElementContent(feedBackEl, { cache: true });
+            timeSpan.textContent = maxAge;
             flag = true;
           }
           return response.text();
         }
       })
       .then((data) => {
-        if (!feedBackContent.innerHTML && maxAge) {
-          feedBackContent.innerHTML = maxAge;
+        if (timeSpan && timeSpan.textContent !== 0 && !timer) {
           timer = setInterval(() => {
-            feedBackContent.innerHTML = --maxAge;
-            if (maxAge <= 0) {
+            timeSpan.textContent = (timeSpan.textContent - 0.1).toFixed(1);
+            if (timeSpan.textContent <= 0) {
               clearInterval(timer);
-              feedBackContent.innerHTML = "";
+              timer = null;
+              fixFeedBackElementContent(feedBackEl, { cache: false });
               maxAge = undefined;
+              timeSpan = "";
               flag = false;
             }
-          }, 1000);
+          }, 100);
         }
-        alert(data);
+        popupMessageBox(data);
       })
       .catch((error) => {
         console.log("请求失败 =>", error);
@@ -50,17 +57,20 @@ import { getCacheControlContent } from "./utils.js";
 
 // 强制缓存+协商缓存测试
 (function (doc) {
-  const test2 = doc.querySelector("div.test-2");
-  const sendBtn = test2.querySelector("button#send");
-  const feedBackContent = test2.querySelector("span.feed-back");
+  const test1 = doc.querySelector("#test-3");
+  const reqBtn = test1.querySelector("button#request-sentence");
+  const feedBackEl = test1.querySelector("div.feed-back");
+  let timeSpan = "";
+
+  fixFeedBackElementContent(feedBackEl, { cache: false });
 
   // 强制缓存时间, 是否能对maxAge赋值, 页面记录强制缓存时间的计时器
   let maxAge = undefined,
     flag = false,
     timer = null;
 
-  sendBtn.addEventListener("click", function () {
-    fetch("http://localhost:3000/sentence", {
+  reqBtn.addEventListener("click", function () {
+    fetch("/sentence", {
       method: "GET",
       headers: {
         "Content-Type": "text/plain",
@@ -70,25 +80,28 @@ import { getCacheControlContent } from "./utils.js";
         if (response.ok) {
           if (!flag) {
             maxAge = getCacheControlContent(response.headers)["max-age"];
+            timeSpan = fixFeedBackElementContent(feedBackEl, { cache: true });
+            timeSpan.textContent = maxAge;
             flag = true;
           }
           return response.text();
         }
       })
       .then((data) => {
-        if (!feedBackContent.innerHTML && maxAge) {
-          feedBackContent.innerHTML = maxAge;
+        if (timeSpan && timeSpan.textContent !== 0 && !timer) {
           timer = setInterval(() => {
-            feedBackContent.innerHTML = --maxAge;
-            if (maxAge <= 0) {
+            timeSpan.textContent = (timeSpan.textContent - 0.1).toFixed(1);
+            if (timeSpan.textContent <= 0) {
               clearInterval(timer);
-              feedBackContent.innerHTML = "";
+              timer = null;
+              fixFeedBackElementContent(feedBackEl, { cache: false });
               maxAge = undefined;
+              timeSpan = "";
               flag = false;
             }
-          }, 1000);
+          }, 100);
         }
-        alert(data);
+        popupMessageBox(data);
       })
       .catch((error) => {
         console.log("请求失败 =>", error);

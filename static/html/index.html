@@ -46,14 +46,36 @@
         <p>
           “过去，提到云南，大部分日本人的印象应该是松茸。如今，产自云南的普洱茶、鲜花、咖啡、三七等也逐渐被日本人熟知。”日本云南总商会会长初鹿野惠兰14日在东京接受新华社记者专访时说，随着云南与日本经贸、文化交流不断深化，各种云南特产走进日本消费者的视野，成为日本市场上的“中国名片”之一。
         </p>
-        <div class="test-1">
-          <button id="send">强制缓存测试</button>
-          <span class="feed-back"></span>
-        </div>
-        <div class="test-2">
-          <button id="send">强制缓存+协商缓存测试</button>
-          <span class="feed-back"></span>
-        </div>
+        <hr />
+        <fieldset id="test-1">
+          <legend>强制缓存测试</legend>
+          <label for="dictum">获取一句名言</label>
+          <button id="request-dictum">发送请求</button>
+          <div class="feed-back">
+            <!-- <span>浏览器磁盘缓存内容倒计时:</span>
+            <span class="time">0</span>
+            <span>s</span> -->
+          </div>
+        </fieldset>
+        <fieldset id="test-2">
+          <legend>协商缓存测试</legend>
+          <button class="send">发送请求</button>
+          <div class="feed-back">
+            <span>倒计时:</span>
+            <span class="time">0</span>
+            <span>s</span>
+          </div>
+        </fieldset>
+        <fieldset id="test-3">
+          <label for="sentence">获取一句话</label>
+          <legend>强制缓存+协商缓存测试</legend>
+          <button id="request-sentence">发送请求</button>
+          <div class="feed-back">
+            <span>浏览器磁盘缓存内容倒计时:</span>
+            <span class="time">0</span>
+            <span>s</span>
+          </div>
+        </fieldset>
       </div>
     </div>
   </body>

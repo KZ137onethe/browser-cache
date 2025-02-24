@@ -1,3 +1,4 @@
+/*全局*/
 body {
   margin: 0;
   padding: 0;
@@ -9,14 +10,6 @@ body {
   margin: 10px auto 0;
 }
 
-#coffee-1 {
-  float: left;
-}
-
-#coffee-2 {
-  float: right;
-}
-
 p {
   text-indent: 1rem;
   margin: 10px 0;
@@ -25,4 +18,33 @@ p {
 p:first-of-type {
   margin: 10px 60px;
   /* color:blueviolet; */
+}
+
+/*静态资源*/
+#coffee-1 {
+  float: left;
+}
+
+#coffee-2 {
+  float: right;
+}
+
+/*测试相关*/
+fieldset label {
+  font-size: 14px;
+  color: #6b798e;
+}
+
+legend {
+  background-color: #000;
+  color: #fff;
+  padding: 3px 6px;
+}
+
+div.feed-back {
+  display: inline-block;
+  padding: 0px 5px;
+  color: black;
+  font-size: 14px;
+  outline: 1px dashed currentColor;
 }

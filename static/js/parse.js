@@ -1,3 +1,9 @@
+/**
+ * 转化响应标头中的CacheControl为对象
+ * @param {Headers} headers - Headers对象
+ * @returns object
+ * @example { 'max-age': 100, public: true }
+ */
 function getCacheControlContent(headers) {
   const data = {};
   const headersArr = headers
