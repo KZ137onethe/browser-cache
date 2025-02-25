@@ -16,7 +16,7 @@ import { popupMessageBox, fixFeedBackElementContent } from "./dom.js";
     timer = null;
 
   reqBtn.addEventListener("click", function () {
-    fetch("/dictum", {
+    fetch("/emoji", {
       method: "GET",
       headers: {
         "Content-Type": "text/plain",

@@ -18,8 +18,8 @@ function responseForReadFile(fullPath, opts = { res, format: null, callback }) {
   const { res, format, callback } = opts;
   fs.readFile(fullPath, format, function (err, data) {
     if (err) {
-      res.statusCode = 500;
-      res.end(err.message);
+      res.statusCode = 404;
+      res.end("Not Found!");
     } else {
       setContentTypeForResponse(fullPath, { res });
       callback(data);

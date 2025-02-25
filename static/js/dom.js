@@ -79,6 +79,7 @@ function fixFeedBackElementContent(el, opts = { cache: true }) {
     }
   } finally {
     el.appendChild(fragment);
+    el.style.outlineWidth = "1px";
     el.style.color = color;
   }
 }
