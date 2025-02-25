@@ -1,3 +1,4 @@
+@import url(./cache-test.css);
 /*全局*/
 body {
   margin: 0;
@@ -27,24 +28,4 @@ p:first-of-type {
 
 #coffee-2 {
   float: right;
-}
-
-/*测试相关*/
-fieldset label {
-  font-size: 14px;
-  color: #6b798e;
-}
-
-legend {
-  background-color: #000;
-  color: #fff;
-  padding: 3px 6px;
-}
-
-div.feed-back {
-  display: inline-block;
-  padding: 0px 5px;
-  color: black;
-  font-size: 14px;
-  outline: 0px dashed currentColor;
 }

@@ -49,27 +49,61 @@
         <hr />
         <fieldset id="test-1">
           <legend>强制缓存测试</legend>
-          <label for="dictum">获取水果</label>
-          <button id="request-dictum">发送请求</button>
-          <div class="feed-back">
-            <!-- <span>浏览器磁盘缓存内容倒计时:</span>
-            <span class="time">0</span>
-            <span>s</span> -->
+          <div class="content">
+            <div class="request">
+              <label for="fruit">获取水果</label>
+              <button id="fruit">发送请求</button>
+            </div>
+            <div class="feed-back"></div>
           </div>
         </fieldset>
         <fieldset id="test-2">
           <legend>协商缓存测试</legend>
-          <button class="send">发送请求</button>
-          <div class="feed-back"></div>
+          <div class="content">
+            <div class="request">
+              <label for="dictum">获取每日一言</label>
+              <button id="dictum">发送请求</button>
+            </div>
+            <div class="modify">
+              <select>
+                <option value="cover">覆盖</option>
+                <option value="append">追加</option>
+              </select>
+              <input
+                type="text"
+                placeholder="修改该请求的服务器资源的字符"
+                minlength="1"
+                maxlength="10"
+                required
+                size="26"
+              />
+              <button class="submit">提交给服务器</button>
+            </div>
+          </div>
         </fieldset>
         <fieldset id="test-3">
-          <label for="sentence">获取一句话</label>
           <legend>强制缓存+协商缓存测试</legend>
-          <button id="request-sentence">发送请求</button>
-          <div class="feed-back">
-            <span>浏览器磁盘缓存内容倒计时:</span>
-            <span class="time">0</span>
-            <span>s</span>
+          <div class="content">
+            <div class="request">
+              <label for="sentence">获取一句话</label>
+              <button id="sentence">发送请求</button>
+            </div>
+            <div class="feed-back"></div>
+            <div class="modify">
+              <select>
+                <option value="cover">覆盖</option>
+                <option value="append">追加</option>
+              </select>
+              <input
+                type="text"
+                placeholder="修改该请求的服务器资源的字符"
+                minlength="1"
+                maxlength="10"
+                required
+                size="26"
+              />
+              <button class="submit">提交给服务器</button>
+            </div>
           </div>
         </fieldset>
       </div>

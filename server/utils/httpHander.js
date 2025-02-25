@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 /**
- * @param {string} _data
+ * @param {*} _data
  */
 function cb(_data) {}
 
@@ -11,12 +11,15 @@ function cb(_data) {}
  * @param {string} fullPath - 文件路径
  * @param {object} opts - 配置对象
  * @param {http.ServerResponse} opts.res - response
- * @param {null | string} opts.format - 读取文件时的转换格式，null为默认
+ * @param {null | string} opts.encoding - 读取文件时的转换格式，null为默认
  * @param {cb} opts.callback - 读取文件成功后的回调函数
  */
-function responseForReadFile(fullPath, opts = { res, format: null, callback }) {
-  const { res, format, callback } = opts;
-  fs.readFile(fullPath, format, function (err, data) {
+function responseForReadFile(
+  fullPath,
+  opts = { res, encoding: null, callback }
+) {
+  const { res, encoding, callback } = opts;
+  fs.readFile(fullPath, encoding, function (err, data) {
     if (err) {
       res.statusCode = 404;
       res.end("Not Found!");
@@ -25,6 +28,28 @@ function responseForReadFile(fullPath, opts = { res, format: null, callback }) {
       callback(data);
     }
   });
+}
+
+function responseForWriteFile(
+  fullPath,
+  opts = { encoding, mode, content, callback }
+) {
+  const { encoding, mode, content, callback } = opts;
+  fs.writeFile(
+    fullPath,
+    content,
+    {
+      encoding,
+      flag: mode,
+    },
+    (err) => {
+      if (err) {
+        console.error("写入文件失败");
+      } else {
+        callback();
+      }
+    }
+  );
 }
 
 /**
@@ -62,24 +87,36 @@ function setContentTypeForResponse(fullPath, opt = { res }) {
 
 /**
  * 针对接口的请求方法做一些处理
- * @param {"GET" | "POST" | "PUT"} methods - 请求方法
- * @param {Function} callback - 回调函数
+ * @param {"GET" | "POST" | "PUT" | "DELETE" | "OPTIONS" | "PATCH"} method - 请求方法
+ * @param {object} opts - 配置对象
+ * @param {http.IncomingMessage} opts.req - request
+ * @param {cb} opts.handleRespnose - 该请求方法的回调函数
  */
-function requestForMethod(methods, callback) {
-  switch (methods) {
-    case "GET":
-      return callback();
-    case "POST":
-      return callback();
-    case "PUT":
-      return callback();
-    default:
-      undefined;
+function requestForMethod(method, opts = { req, handleRespnose }) {
+  const { req, handleRespnose } = opts;
+  if (req.method === method) {
+    switch (method) {
+      case "GET":
+        return handleRespnose();
+      case "POST":
+        return handleRespnose();
+      case "PUT":
+        return handleRespnose();
+      case "DELETE":
+        return handleRespnose();
+      case "OPTIONS":
+        return handleRespnose();
+      case "PATCH":
+        return handleRespnose();
+      default:
+        undefined;
+    }
   }
 }
 
 module.exports = {
   responseForReadFile,
+  responseForWriteFile,
   setContentTypeForResponse,
   requestForMethod,
 };
