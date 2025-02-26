@@ -16,7 +16,7 @@ import { popupMessageBox, fixFeedBackElementContent } from "./dom.js";
     timer = null;
 
   reqBtn.addEventListener("click", function () {
-    fetch("/emoji", {
+    fetch("/api/caches/emoji", {
       method: "GET",
       headers: {
         "Content-Type": "text/plain",
@@ -61,7 +61,7 @@ import { popupMessageBox, fixFeedBackElementContent } from "./dom.js";
   // 发送请求
   const reqBtn = test2ContentEl.querySelector(".request > button#dictum");
   reqBtn.addEventListener("click", function () {
-    fetch("/dictum", {
+    fetch("/api/caches/dictum", {
       method: "GET",
       headers: {
         "Content-Type": "text/plain",
@@ -95,12 +95,15 @@ import { popupMessageBox, fixFeedBackElementContent } from "./dom.js";
     inputText = e.target.value;
   });
   submitBtnEl.addEventListener("click", () =>
-    fetch("/dictum", {
+    fetch("/api/caches/dictum", {
       method: "PUT",
       headers: {
         "X-Put-Type": putType,
+        "Content-Type": "application/json",
       },
-      body: inputText,
+      body: JSON.stringify({
+        data: inputText,
+      }),
     })
       .then((reponse) => {
         if (reponse.ok) {
@@ -130,7 +133,7 @@ import { popupMessageBox, fixFeedBackElementContent } from "./dom.js";
     timer = null;
 
   reqBtn.addEventListener("click", function () {
-    fetch("/sentence", {
+    fetch("/api/caches/sentence", {
       method: "GET",
       headers: {
         "Content-Type": "text/plain",
@@ -184,12 +187,15 @@ import { popupMessageBox, fixFeedBackElementContent } from "./dom.js";
     inputText = e.target.value;
   });
   submitBtnEl.addEventListener("click", () =>
-    fetch("/sentence", {
+    fetch("/api/caches/sentence", {
       method: "PUT",
       headers: {
         "X-Put-Type": putType,
+        "Content-Type": "application/json",
       },
-      body: inputText,
+      body: JSON.stringify({
+        data: inputText,
+      }),
     })
       .then((reponse) => {
         if (reponse.ok) {

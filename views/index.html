@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="static/css/index.css" />
   </head>
   <body>
     <div id="app">
@@ -12,7 +12,7 @@
         <img
           width="25"
           height="25"
-          src="../assets/svg/star.svg"
+          src="static/assets/svg/star.svg"
           alt=""
           role="img"
           title="星星"
@@ -21,17 +21,17 @@
         这是一个测试浏览器缓存的页面
       </h2>
 
-      <div class="container">
+      <div class="article">
         <img
           id="coffee-1"
-          src="../assets/images/Coffee_1.png"
+          src="static/assets/images/Coffee_1.png"
           width="50"
           height="50"
           alt=""
         />
         <img
           id="coffee-2"
-          src="../assets/images/Coffee_2.png"
+          src="static/assets/images/Coffee_2.png"
           width="50"
           height="50"
           alt=""
@@ -46,7 +46,11 @@
         <p>
           “过去，提到云南，大部分日本人的印象应该是松茸。如今，产自云南的普洱茶、鲜花、咖啡、三七等也逐渐被日本人熟知。”日本云南总商会会长初鹿野惠兰14日在东京接受新华社记者专访时说，随着云南与日本经贸、文化交流不断深化，各种云南特产走进日本消费者的视野，成为日本市场上的“中国名片”之一。
         </p>
-        <hr />
+      </div>
+
+      <hr />
+
+      <div class="playground">
         <fieldset id="test-1">
           <legend>强制缓存测试</legend>
           <div class="content">
@@ -109,5 +113,5 @@
       </div>
     </div>
   </body>
-  <script type="module" src="../js/index.js"></script>
+  <script type="module" src="static/js/index.js"></script>
 </html>

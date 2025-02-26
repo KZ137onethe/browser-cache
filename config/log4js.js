@@ -1,14 +1,13 @@
 const log4js = require("log4js");
-const path = require("path");
 
 log4js.configure({
   appenders: {
     cheese: {
       type: "file",
       daysToKeep: 5, // 删除5天前的日志
-      filename: path.join(__dirname, "./logs/cheese.log"),
-      keepFileExt: false,
-      compress: true,
+      filename: "logs/cheese.log",
+      compress: true, // 合并
+      backups: 3, // 保留的旧日志文件数量
     },
   },
   categories: {
@@ -16,6 +15,6 @@ log4js.configure({
   },
 });
 
-module.exports = function getLogger(category) {
-  return log4js.getLogger(category);
-};
+// 导出日志实例
+const logger = log4js.getLogger();
+module.exports = logger;
