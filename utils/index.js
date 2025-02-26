@@ -24,6 +24,11 @@ function generateFileHash(val, type = "file") {
   return `${hash.digest("hex")}`;
 }
 
+/**
+ * 获取文件最后的修改时间
+ * @param {string} filePath
+ * @returns string
+ */
 function getFileLastModifiedTime(filePath) {
   const stats = fs.statSync(filePath);
   return stats.mtime.toUTCString();
