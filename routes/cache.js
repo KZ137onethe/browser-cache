@@ -2,11 +2,8 @@ const path = require("path");
 const fs = require("fs");
 const express = require("express");
 const router = express.Router();
-const { noCache } = require("../utils/middleware");
 
 const { generateFileHash } = require("../utils/index");
-// 禁用缓存
-router.use(noCache);
 
 const basePath = path.join(__dirname, "../temp/cache");
 
@@ -57,7 +54,10 @@ router.put("/dictum", (req, res) => {
     },
     (err) => {
       if (!err) {
-        res.send("修改成功");
+        res.writeHead(204, {
+          "cache-control": "public",
+        });
+        res.end();
       }
     }
   );
@@ -71,7 +71,7 @@ router.get("/sentence", (req, res) => {
       const etag = generateFileHash(data, "content");
       const ifNoneMatch = req.headers["if-none-match"];
       const headers = {
-        "Cache-Control": "max-age=12",
+        "Cache-Control": "max-age=3600",
         ETag: generateFileHash(data, "content"),
       };
       if (ifNoneMatch && ifNoneMatch === etag) {
@@ -99,7 +99,8 @@ router.put("/sentence", (req, res) => {
     },
     (err) => {
       if (!err) {
-        res.send("修改成功");
+        res.writeHead(204);
+        res.end();
       }
     }
   );

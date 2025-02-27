@@ -110,8 +110,8 @@ import { popupMessageBox, fixFeedBackElementContent } from "./dom.js";
           return reponse.text();
         }
       })
-      .then((data) => {
-        popupMessageBox(data);
+      .then(() => {
+        popupMessageBox("修改成功");
         inputEl.value = "";
       })
   );
@@ -202,8 +202,8 @@ import { popupMessageBox, fixFeedBackElementContent } from "./dom.js";
           return reponse.text();
         }
       })
-      .then((data) => {
-        popupMessageBox(data);
+      .then(() => {
+        popupMessageBox("修改成功");
         inputEl.value = "";
       })
   );
