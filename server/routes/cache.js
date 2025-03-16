@@ -12,7 +12,7 @@ router.get("/emoji", function (req, res) {
   const fullPath = path.join(basePath, "emoji.txt");
   fs.readFile(fullPath, "utf-8", (err, data) => {
     if (!err) {
-      res.setHeader("Cache-Control", "max-age=8");
+      res.setHeader("Cache-Control", "max-age=60");
       res.send(data);
     }
   });
@@ -29,7 +29,6 @@ router.get("/dictum", (req, res) => {
         res.writeHead(304, {
           ETag: etag,
         });
-        res.end();
       } else {
         res.writeHead(200, {
           ETag: etag,
@@ -99,7 +98,9 @@ router.put("/sentence", (req, res) => {
     },
     (err) => {
       if (!err) {
-        res.writeHead(204);
+        res.writeHead(204, {
+          "cache-control": "max-age=3600",
+        });
         res.end();
       }
     }

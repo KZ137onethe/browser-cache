@@ -23,8 +23,7 @@ app.use(
 
 // 指定静态资源文件目录，这里使用的是协商缓存
 app.use(
-  "/static",
-  express.static("public", {
+  express.static("views/index", {
     etag: false,
     // 虽然默认也是0，但是需要注意
     maxAge: 0,

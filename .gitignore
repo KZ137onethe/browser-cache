@@ -1,3 +1,9 @@
 node_modules
-package-lock.json
-logs/*
+**/node_modules
+
+# 服务端
+server/package-lock.json
+server/logs/*
+
+# 客户端
+client/dist

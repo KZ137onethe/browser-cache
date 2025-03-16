@@ -5,8 +5,9 @@ const router = express.Router();
 
 const basePath = path.join(__dirname, "../views");
 
+
 router.get("/", (req, res) => {
-  const fullPath = path.join(basePath, "./index.html");
+  const fullPath = path.join(basePath, "./index/index.html");
   fs.readFile(fullPath, function (err, data) {
     if (err) {
       res.statusCode = 404;
