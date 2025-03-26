@@ -6,4 +6,4 @@ server/package-lock.json
 server/logs/*
 
 # 客户端
-client/dist
+server/views/**

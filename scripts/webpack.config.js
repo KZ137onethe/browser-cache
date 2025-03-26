@@ -5,12 +5,13 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 module.exports = {
   mode: "development",
   devtool: "source-map",
+  watch: true,
   entry: {
-    index: "./index/js/index.js",
+    index: "./index/index.js",
   },
   context: path.resolve(__dirname, "./src/pages"),
   output: {
-    filename: "index.[contenthash:5].js",
+    filename: "scripts/[name].[contenthash:5].js",
     path: path.resolve(__dirname, "../server/views"),
     clean: true,
   },
@@ -26,11 +27,25 @@ module.exports = {
           from: "index/assets",
           to: "index/assets",
         },
-        {
-          from: "index/css",
-          to: "index/css",
-        },
       ],
     }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: [
+          {
+            loader: "style-loader",
+          },
+          {
+            loader: "css-loader",
+            options: {
+              url: true,
+            },
+          },
+        ],
+      },
+    ],
+  },
 };

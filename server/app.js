@@ -29,6 +29,14 @@ app.use(
     maxAge: 0,
   })
 );
+app.use(
+  "/scripts",
+  express.static("views/scripts", {
+    etag: false,
+    maxAge: 0,
+  })
+);
+
 // 使用路由
 app.use("/api/caches", cacheRouter);
 app.use("/", pageRouter);

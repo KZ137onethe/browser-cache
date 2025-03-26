@@ -1,5 +1,8 @@
-import { getCacheControlContent } from "./parse.js";
-import { popupMessageBox, fixFeedBackElementContent } from "./dom.js";
+// css
+import "./css/index.css";
+// js
+import { getCacheControlContent } from "./js/parse.js";
+import { popupMessageBox, fixFeedBackElementContent } from "./js/dom.js";
 
 // 强制缓存测试
 (function (doc) {

@@ -2,26 +2,39 @@
 
 ### 介绍
 
-该项目是express服务端渲染网页的一个项目。主要探索浏览器相关的事情。
+务必使用pnpm包管理器
 
-考虑到前端页面在该项目中不好管理和编写，之后会将前端单独起一个React子仓库，而且不再使用服务端渲染的架构（没有必要，刚开始因为简单就用了服务端渲染）
+后端：`express` 搭建
+
+前端：`webpack5` + 原生JavaScript
+
+文档：[链接](https://o0ke9xr7eb.feishu.cn/docx/HYsXdGv6ToSaZTxiMdyc1aZinX4)
 
 #### 目录
 
+本仓库是个monorepo架构
+
 ```bash
-├─ app.js                  // 该项目的主应用文件
-├─ bin                     // 通常用于存放可执行文件或启动脚本
-│  └─ www                  //
-├─ config                  // 存放配置文件，如日志配置
-├─ public                  //  静态资源目录
-├─ routes                  // 服务端路由定义
-├─ temp                    // 临时文件目录
-│  └─ cache                // 
-├─ utils                   // 实用工具函数
-└─ views                   // 视图文件，如HTML模板
+├─ .prettierrc                        // 格式化文件
+├─ package.json                       // 仓库声明
+├─ pnpm-workspace.yaml                // 子包管理
+├─ scripts                            // 前端
+│  ├─ src                             // 前端-源代码目录
+│  │  └─ pages                        // 前端-源代码目录-页面
+│  └─ webpack.config.js               // webpack5配置文件，用与打包前端文件
+└─ server                             // 后端
+   ├─ app.js                          // 后端-该项目的主应用文件
+   ├─ bin                             // 后端-通常用于存放可执行文件或启动脚本
+   │  └─ www                          //
+   ├─ config                          // 后端-存放配置文件，如日志配置
+   ├─ routes                          // 后端-服务端路由定义
+   │  ├─ cache.js                     //
+   │  └─ page.js                      //
+   ├─ temp                            // 后端-临时文件目录
+   └─ utils                           // 后端-实用工具函数
 ```
 
-#### 文档
+### 使用须知
 
-[链接](https://o0ke9xr7eb.feishu.cn/docx/HYsXdGv6ToSaZTxiMdyc1aZinX4)
-
+1. 进行前端静态资源打包，执行`pnpm scripts:bundle`，它会监听前端静态资源的变化重新打包
+2. 启动服务器，执行`pnpm start`，运行本地服务器

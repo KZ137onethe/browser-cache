@@ -70,7 +70,7 @@ router.get("/sentence", (req, res) => {
       const etag = generateFileHash(data, "content");
       const ifNoneMatch = req.headers["if-none-match"];
       const headers = {
-        "Cache-Control": "max-age=3600",
+        "Cache-Control": "max-age=60",
         ETag: generateFileHash(data, "content"),
       };
       if (ifNoneMatch && ifNoneMatch === etag) {
@@ -99,7 +99,7 @@ router.put("/sentence", (req, res) => {
     (err) => {
       if (!err) {
         res.writeHead(204, {
-          "cache-control": "max-age=3600",
+          "cache-control": "max-age=60",
         });
         res.end();
       }

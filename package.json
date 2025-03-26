@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "pnpm run -F @browser-cache/server start",
-    "dev": "pnpm run -F @browser-cache/client dev"
+    "scripts:bundle": "pnpm run -F @browser-cache/scripts bundle"
   },
   "keywords": [],
   "author": "",
