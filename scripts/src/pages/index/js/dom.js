@@ -5,15 +5,17 @@
 function popupMessageBox(content) {
   const fragment = document.createDocumentFragment();
   const divEl = document.createElement("div");
-  divEl.style.position = "fixed";
-  divEl.style.textAlign = "center";
-  divEl.style.padding = "5px";
-  divEl.style.border = "1px solid #206864";
-  divEl.style.backgroundColor = "#f5f3f2";
-  divEl.style.left = "50%";
-  divEl.style.top = "15px";
-  divEl.style.transform = "translate(-50%, 0)";
-  divEl.style.color = "";
+  Object.assign(divEl.style, {
+    position: "fixed",
+    textAlign: "center",
+    padding: "5px",
+    border: "1px solid #206864",
+    backgroundColor: "#f5f3f2",
+    left: "50%",
+    top: "15px",
+    transform: "translate(-50%, 0)",
+    color: "",
+  });
   divEl.textContent = content;
   fragment.appendChild(divEl);
 

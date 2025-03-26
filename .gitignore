@@ -4,6 +4,8 @@ node_modules
 # 服务端
 server/package-lock.json
 server/logs/*
+server/temp/cache/*.txt
 
 # 客户端
+server/views/*
 server/views/**
