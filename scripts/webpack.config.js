@@ -33,7 +33,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/i,
+        test: /\.s[ac]ss$/i,
         use: [
           {
             loader: "style-loader",
@@ -44,8 +44,28 @@ module.exports = {
               url: true,
             },
           },
+          {
+            loader: "sass-loader",
+            options: {
+              additionalData: function (content, loaderContext) {
+                const { resourcePath } = loaderContext;
+                if (resourcePath.endsWith("index.scss")) {
+                  return `
+                    @use "@/styles/global.scss";
+                    ${content}
+                  `;
+                }
+                return `${content}`;
+              },
+            },
+          },
         ],
       },
     ],
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
   },
 };

@@ -1,5 +1,5 @@
 // css
-import "./css/index.css";
+import "./css/index.scss";
 // js
 import { getCacheControlContent } from "./js/parse.js";
 import { popupMessageBox, fixFeedBackElementContent } from "./js/dom.js";
