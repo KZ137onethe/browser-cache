@@ -6,20 +6,42 @@ function popupMessageBox(content) {
   const fragment = document.createDocumentFragment();
   const divEl = document.createElement("div");
   Object.assign(divEl.style, {
-    position: "fixed",
+    position: "absolute",
     textAlign: "center",
-    padding: "5px",
-    border: "1px solid #206864",
-    backgroundColor: "#f5f3f2",
+    padding: "5px 10px",
+    borderRadius: "5px",
+    backgroundColor: "#fff",
     left: "50%",
     top: "15px",
     transform: "translate(-50%, 0)",
+    boxShadow: "0 0 6px 1px #d4dde1",
+    opacity: 1,
     color: "",
   });
   divEl.textContent = content;
   fragment.appendChild(divEl);
 
-  const keyframes = new KeyframeEffect(
+  const in_keyframes = new KeyframeEffect(
+    divEl,
+    [
+      {
+        opacity: 0,
+        top: 0,
+        transform: "translate(-50%, -100%)",
+      },
+      {
+        opacity: 1,
+        top: "15px",
+        transform: "translate(-50%, 0)",
+      },
+    ],
+    {
+      duration: 100,
+      easing: "ease-in",
+    }
+  );
+  const in_animation = new Animation(in_keyframes, document.timeline);
+  const out_keyframes = new KeyframeEffect(
     divEl,
     [
       {
@@ -29,22 +51,25 @@ function popupMessageBox(content) {
       {
         transform: "translate(-50%, -50%)",
         top: "7px",
-        opacity: 0.8,
       },
       {
         transform: "translate(-50%, -100%)",
         top: "0px",
-        opacity: 0,
       },
     ],
     {
-      duration: 1000,
+      delay: 800,
+      duration: 300,
     }
   );
-  const animation = new Animation(keyframes, document.timeline);
-  document.documentElement.appendChild(fragment);
-  animation.play();
-  animation.addEventListener("finish", () => {
+  const out_animation = new Animation(out_keyframes, document.timeline);
+  document.body.appendChild(fragment);
+  in_animation.play();
+  in_animation.addEventListener("finish", () => {
+    out_animation.play();
+  });
+
+  out_animation.addEventListener("finish", () => {
     // 动画完成，移除该dom元素
     divEl.remove();
   });
