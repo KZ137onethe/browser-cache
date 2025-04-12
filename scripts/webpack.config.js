@@ -9,6 +9,7 @@ module.exports = {
   watch: true,
   entry: {
     index: "./index/index.js",
+    caches: "./caches/index.js",
   },
   context: path.resolve(__dirname, "./src/pages"),
   output: {
@@ -18,16 +19,22 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "缓存测试",
+      title: "主页",
       template: "./index/index.html",
-      filename: "[name]/index.html",
+      filename: "index.html",
       chunks: ["index"],
+    }),
+    new HtmlWebpackPlugin({
+      title: "缓存测试",
+      template: "./caches/index.html",
+      filename: "caches.html",
+      chunks: ["caches"],
     }),
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: "index/assets",
-          to: "index/assets",
+          from: "caches/assets",
+          to: "assets",
         },
       ],
     }),
@@ -42,6 +49,9 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: "/",
+            },
           },
           {
             loader: "css-loader",
@@ -65,6 +75,13 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.(png|jpe?g)/i,
+        type: "asset/resource",
+        generator: {
+          filename: "assets/images/[name]-[contenthash:5].[ext]",
+        },
       },
     ],
   },

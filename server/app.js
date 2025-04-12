@@ -23,13 +23,6 @@ app.use(
 
 // 指定静态资源文件目录，这里使用的是协商缓存
 app.use(
-  express.static("views/index", {
-    etag: false,
-    // 虽然默认也是0，但是需要注意
-    maxAge: 0,
-  })
-);
-app.use(
   "/scripts",
   express.static("views/scripts", {
     etag: false,
@@ -40,6 +33,14 @@ app.use(
 app.use(
   "/stylesheets",
   express.static("views/stylesheets", {
+    etag: false,
+    maxAge: 0,
+  })
+);
+
+app.use(
+  "/assets",
+  express.static("views/assets", {
     etag: false,
     maxAge: 0,
   })

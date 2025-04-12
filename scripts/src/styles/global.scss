@@ -1,1 +1,17 @@
 @use "reset";
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  &:visited {
+    color: currentColor;
+  }
+
+  &:hover,
+  &:active {
+    color: #3d8e86;
+  }
+}
