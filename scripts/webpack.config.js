@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "development",
@@ -17,6 +18,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      title: "缓存测试",
       template: "./index/index.html",
       filename: "[name]/index.html",
       chunks: ["index"],
@@ -29,6 +31,9 @@ module.exports = {
         },
       ],
     }),
+    new MiniCssExtractPlugin({
+      filename: "stylesheets/[name]-[contenthash:5].css",
+    }),
   ],
   module: {
     rules: [
@@ -36,7 +41,7 @@ module.exports = {
         test: /\.s[ac]ss$/i,
         use: [
           {
-            loader: "style-loader",
+            loader: MiniCssExtractPlugin.loader,
           },
           {
             loader: "css-loader",

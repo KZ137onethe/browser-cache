@@ -37,6 +37,14 @@ app.use(
   })
 );
 
+app.use(
+  "/stylesheets",
+  express.static("views/stylesheets", {
+    etag: false,
+    maxAge: 0,
+  })
+);
+
 // 使用路由
 app.use("/api/caches", cacheRouter);
 app.use("/", pageRouter);
